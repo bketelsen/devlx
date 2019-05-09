@@ -150,7 +150,7 @@ func (c *Client) ContainerInfo(name string) (*api.Container, error) {
 func (c *Client) ContainerRemove(name string) error {
 	cont, err := GetContainer(c.conn, name)
 	if err != nil {
-		return errors.Wrap(err, "getting container")
+		return err
 	}
 	return cont.Remove()
 }

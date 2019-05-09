@@ -46,7 +46,13 @@ type sourceFile struct {
 func GetContainer(conn client.ContainerServer, name string) (*Container, error) {
 	container, etag, err := conn.GetContainer(name)
 	if err != nil {
-		return &Container{}, errors.Wrap(err, "getting container")
+		cause := err.Error()
+		switch cause {
+		case "not found":
+			return &Container{}, err
+		default:
+			return &Container{}, errors.Wrap(err, "getting container")
+		}
 	}
 	return &Container{
 		container: container,

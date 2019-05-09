@@ -84,6 +84,13 @@ to quickly create a Cobra application.`,
 			log.Error("Error stopping container: " + err.Error())
 			os.Exit(1)
 		}
+
+		// evaluate template in relations.yaml
+		err = setContainerTemplateRelation(lxclient, "", name, true)
+		if err != nil {
+			log.Error("Error writing template to database: " + err.Error())
+			os.Exit(1)
+		}
 	},
 }
 
